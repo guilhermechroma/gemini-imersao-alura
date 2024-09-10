@@ -4,10 +4,9 @@
 :root {
   --cor-principal: #228b22; /* Verde musgo */
   --cor-secundaria: #305e32; /* Verde escuro */
-  --cor-texto-principal: #222831; /* Cinza escuro */
-  --cor-texto-secundario: #45474b; /* Cinza claro */
-  --cor-texto-terciario: #f5f5f5; /* Bege claro */
-  --cor-input-fundo: #f0f0f0; /* Fundo do input */
+  --cor-texto-principal: #f5f5f5; /* Cinza escuro */
+  --cor-texto-secundario: #707275; /* Cinza claro */
+  --cor-input-fundo: #181a1b; /* Fundo do input */
 }
 
 /* Estiliza o corpo da página */
@@ -16,14 +15,13 @@ body {
   background-image: linear-gradient(
       to right,
       transparent,
-      rgba(255, 255, 255, 0.5) 50%,
+      rgba(0, 0, 0, 0.2) 50%,
       transparent
     ),
     url("images/background-image.webp");
   background-repeat: repeat-x;
   background-size: cover;
   background-attachment: fixed;
-  color: var(--cor-texto-secundario); /* Cor do texto da página */
   display: flex; /* Usa Flexbox para layout */
   flex-direction: column; /* Alinha os itens na vertical */
   align-items: center; /* Centraliza os itens horizontalmente */
@@ -44,12 +42,16 @@ h1 {
 
 a {
   text-decoration: none; /* Remove o sublinhado padrão dos links */
-  color: var(--cor-secundaria); /* Cor do texto dos links */
+  color: var(--cor-texto-principal); /* Cor do texto dos links */
+  text-shadow: -1px -1px 0 var(--cor-secundaria),
+    1px -1px 0 var(--cor-secundaria), -1px 1px 0 var(--cor-secundaria),
+    1px 1px 0 var(--cor-secundaria);
 }
 
 /* Estiliza os links quando são passados o mouse sobre */
 a:hover {
   text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+  filter: drop-shadow(0 2px 2px var(--cor-principal));
 }
 
 /* Estiliza as seções da página */
@@ -76,8 +78,8 @@ section input {
 
 section input:focus {
   outline: none !important;
-  border: 1px solid var(--cor-secundaria);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais intensa */
+  border: 1px solid var(--cor-principal);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais intensa */
 }
 
 section input::placeholder {
@@ -98,14 +100,27 @@ section button {
   color: #f5f7f8; /* Cor do texto do botão */
   font-size: 1rem; /* Tamanho da fonte */
   cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  background-position: center;
+  transition: background 0.8s;
 }
 
 /* Adiciona efeito hover ao botão de pesquisa */
 section button:hover {
-  background-color: var(
-    --cor-secundaria
-  ); /* Muda a cor de fundo ao passar o mouse */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona uma sombra mais intensa */
+  background: var(--cor-secundaria)
+    radial-gradient(circle, #0000 1%, var(--cor-secundaria) 1%) center/15000%;
+}
+
+section button:active {
+  background-color: var(--cor-principal);
+  background-size: 100%;
+  transition: background 0s;
+}
+
+#error {
+  visibility: hidden;
+  color: red;
+  font-weight: bold;
 }
 
 /* Estiliza a caixa de resultados da pesquisa */
@@ -116,14 +131,16 @@ section button:hover {
   margin-top: 1rem; /* Espaçamento acima da caixa de resultados */
   padding: 1rem; /* Espaçamento interno */
   border-radius: 0.6rem; /* Borda arredondada */
+  scrollbar-color: var(--cor-texto-principal) var(--cor-input-fundo); /* Cor da barra de rolagem */
+  scrollbar-width: thin; /* Espessura da barra de rolagem */
 }
 
 /* Estiliza cada item de resultado */
 .item-resultado {
-  background-color: rgba(255, 255, 255, 0.3); /* Transparência de 80% */
+  background-color: rgba(0, 0, 0, 0.2); /* Fundo claro transparente */
   backdrop-filter: blur(
     5px
-  ); /* Adiciona um efeito de blur para suavizar as bordas */
+  ); /* Adiciona um efeito de blur para suavizar às bordas */
   border-radius: 0.6rem; /* Borda arredondada */
   padding: 1rem; /* Espaçamento interno */
   margin-bottom: 1rem; /* Espaçamento abaixo dos itens */
@@ -135,17 +152,6 @@ section button:hover {
   font-size: 1.5rem; /* Tamanho da fonte */
   color: var(--cor-texto-principal); /* Cor do texto */
   filter: drop-shadow(0 2px 2px #505050);
-}
-
-/* Estiliza os links dentro dos itens de resultado */
-.item-resultado a {
-  text-decoration: none; /* Remove o sublinhado padrão dos links */
-  color: var(--cor-secundaria); /* Cor do texto dos links */
-}
-
-/* Estiliza os links quando são passados o mouse sobre */
-.item-resultado a:hover {
-  text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
 }
 
 .item-resultado img {
@@ -164,7 +170,9 @@ section button:hover {
 
 /* Estiliza a descrição meta dentro dos itens de resultado */
 .descricao-meta {
-  color: var(--cor-texto-terciario); /* Cor do texto */
+  display: flex;
+  flex-direction: column;
+  color: var(--cor-texto-principal); /* Cor do texto */
   margin: 0.5rem 0; /* Margem acima e abaixo */
   background-color: rgba(0, 0, 0, 0.4); /* Transparência de 80% */
   backdrop-filter: blur(
@@ -178,11 +186,11 @@ section button:hover {
 
 /* Estiliza o rodapé da página */
 footer {
-  background-color: rgba(255, 255, 255, 0.3); /* Transparência de 80% */
+  background-color: rgba(0, 0, 0, 0.2); /* Transparência de 80% */
   backdrop-filter: blur(
     5px
   ); /* Adiciona um efeito de blur para suavizar as bordas */
-  color: var(--cor-texto-secundario); /* Cor do texto */
+  color: var(--cor-texto-principal); /* Cor do texto */
   text-align: center; /* Alinha o texto ao centro */
   padding: 0; /* Espaçamento interno */
   width: 100%; /* Largura total da página */
