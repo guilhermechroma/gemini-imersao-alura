@@ -14,4 +14,12 @@ Projeto Web feito durante a Imersão Dev com Gemini da Alura. Desenvolvido no te
 
 ### Aula 01
 
+> Início do Projeto
+
 ![Aula 01](https://github.com/guilhermechroma/gemini-imersao-alura/blob/main/images/aula-01.gif)
+
+### Aula 02
+
+> Melhorias na estilização
+
+![Aula 02](https://github.com/guilhermechroma/gemini-imersao-alura/blob/main/images/aula-02.gif)
